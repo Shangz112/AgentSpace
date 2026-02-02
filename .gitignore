@@ -267,3 +267,7 @@ docker/mysql/data/*
 docker/office/bisheng/*.gz
 
 CLAUDE.md
+docker/agentspace-frontend.tar
+docker/as-milivus.tar
+docker/as-redis.tar
+STARLINK_AI_TEST_DESIGN.md
