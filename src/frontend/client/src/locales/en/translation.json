@@ -466,7 +466,7 @@
   "com_ui_agent_delete_error": "There was an error deleting the agent",
   "com_ui_agent_deleted": "Successfully deleted agent",
   "com_ui_agent_duplicate_error": "There was an error duplicating the agent",
-  "com_ui_agent_duplicated": "Agent duplicated successfully",
+  "com_ui_agent_duplicated": "Agent copied successfully",
   "com_ui_agent_editing_allowed": "Other users can already edit this agent",
   "com_ui_agent_shared_to_all": "something needs to go here. was empty",
   "com_ui_agents": "Agents",
@@ -608,10 +608,10 @@
   "com_ui_dropdown_variables": "Dropdown variables:",
   "com_ui_dropdown_variables_info": "Create custom dropdown menus for your prompts: `{{variable_name:option1|option2|option3}}`",
   "com_ui_duplicate": "Duplicate",
-  "com_ui_duplicated": "Duplicated",
+  "com_ui_duplicated": "Copied",
   "com_ui_duplication_error": "There was an error duplicating the conversation",
   "com_ui_duplication_processing": "Duplicating conversation...",
-  "com_ui_duplication_success": "Successfully duplicated conversation",
+  "com_ui_duplication_success": "Successfully copied conversation",
   "com_app_center_welcome": "Explore BISHENG's Intelligent Agents",
   "com_app_center_description": "You can choose the intelligent agents you need here for production and work~",
   "com_app_frequently_used": "Frequently Used Agents",
@@ -731,7 +731,8 @@
   "com_tools_knowledge_base": "Knowledge Base",
   "kbLimitReached": "Knowledge base limit reached (maximum 50)",
   "com_tools_knowledge_base_search": "Knowledge Base Search",
-  "com_tools_knowledge_rebuilding": "Personal knowledge base embedding model has been changed, rebuilding knowledge base, please try again later",
+  "com_tools_knowledge_rebuilding": "Personal kowledge base embedding model has been changed, rebuilding knowledge base, please try again later",
+  "com_tools_knowledge_upload_remark": "Detection of duplicate files, duplicate files are automatically skipped",
   "com_tools_no_more": "No more data",
   "com_tools_no_results": "No results found",
   "com_ui_edit": "Edit",
@@ -1208,6 +1209,7 @@
     "15023": "Server URLs must start with http or https: {{url}}",
     "15024": "MCP config parse error: {{exception}}",
     "16000": "Dataset name already exists",
-    "11111": "The application has been deleted"
+    "11111": "The application has been deleted",
+    "90001": "You do not have permission to access the admin backend. Please contact the administrator to request access if needed."
   }
 }

@@ -32,25 +32,37 @@ export function initNode(node, nds, t) {
         }
         return node;
     }
-
+    const nodeMap = new Map(nds.map(n => [n.data.type, n.data]));
     node.group_params.forEach(group => {
         group.params.forEach(param => {
-            if (param.type === "var_textarea" && typeof param.value === "string") {
-                if (param.value) {
-                    param.value = t(`node.${node.type}.${param.key}.value`)
-                }
-                // Replace expressions by inserting the node id dynamically
-                param.value = param.value.replace(/{{#([^/]*\/)?(.*?)#}}/g, (match, prefix = '', expression) => {
-                    if (param.varZh) {
-                        param.varZh[`${prefix}${id}.${expression}`] = `${prefix}${expression}`
-                    } else {
-                        param.varZh = {
-                            [`${prefix}${id}.${expression}`]: `${prefix}${expression}`
-                        }
-                    }
-                    return `{{#${prefix}${id}.${expression}#}}`;
-                });
+            if (param.type !== "var_textarea" || typeof param.value !== "string" || !param.value) {
+                return;
             }
+
+            const translationKey = `node.${node.type}.${param.key}.value`;
+            param.value = t(translationKey);
+
+            // Replace expressions by inserting the node id dynamically
+            param.value = param.value.replace(/{{#([^/]*\/)?(.*?)#}}/g, (match, prefixMatch = '', expression) => {
+                let targetId = id;
+                let targetName = '';
+                if (prefixMatch) {
+                    const typePrefix = prefixMatch.replace('/', '');
+                    const targetNode = nodeMap.get(typePrefix);
+
+                    if (targetNode) {
+                        targetId = targetNode.id;
+                        targetName = `${targetNode.name}/`;
+                    } else {
+                        return match;
+                    }
+                }
+
+                param.varZh = param.varZh ?? {};
+                param.varZh[`${targetId}.${expression}`] = `${targetName}${expression}`;
+
+                return `{{#${targetId}.${expression}#}}`;
+            });
         });
     });
 
@@ -116,7 +128,11 @@ export function isVarInFlow(nodeId, nodes, varName, varNameCn) {
     const res = nodes.some(node =>
         varNodeId === node.id ? node.data.group_params.some(group =>
             group.params.some(param => {
-                if (param.type === 'input_list' && varName.indexOf('preset_question') !== -1) {
+                if (param.key === 'custom_variables') {
+                    const questionId = varName.split('#')[1]
+                    const quwstionStr = varNameCn?.split('/')[1] || ''
+                    return param.value.some(item => item.key === questionId && item.label === quwstionStr)
+                } else if (param.type === 'input_list' && varName.indexOf('preset_question') !== -1) {
                     const questionId = varName.split('#')[1]
                     const quwstionStr = varNameCn?.split('/')[1] || ''
                     return param.value.some(item => item.key === questionId && item.value === quwstionStr) // id and name 必须一致
